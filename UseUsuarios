@@ -1,0 +1,22 @@
+import { useState, useEffect } from 'react';
+
+function useUsuarios() {
+  const [usuarios, setUsuarios] = useState([]);
+
+  useEffect(() => {
+    const dadosSalvos = localStorage.getItem('usuarios');
+    if (dadosSalvos) setUsuarios(JSON.parse(dadosSalvos));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+  }, [usuarios]);
+
+  const adicionarUsuario = (usuario) => {
+    setUsuarios((prev) => [...prev, usuario]);
+  };
+
+  return { usuarios, adicionarUsuario };
+}
+
+export default useUsuarios;
